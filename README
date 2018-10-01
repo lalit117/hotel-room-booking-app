@@ -1,0 +1,7 @@
+
+To set up and start project :
+    1) 'npm install' to download all dependencies.
+    2) 'npm start' for start the app.
+
+Note :
+	- MongoDB used for storing data

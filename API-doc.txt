@@ -1,0 +1,40 @@
+
+
+For Creating/updating/deleting hotels : 
+GET /hotel
+    - return all hotels
+
+POST /hotel
+    - body : {
+        name : String
+        address : String
+    }
+
+PUT /hotel/:hotelId
+    - body : {
+        name : String
+        address : String
+    }
+
+DELETE /hotel/:hotelId
+
+For Creating/updating/deleting hotels :
+POST /user 
+    - body : {
+        name : String
+    }
+
+PUT /user/:userId
+    - body : {
+        name : String
+    }
+
+DELETE /user/:userId
+
+for booking room : 
+POST /user/bookroom/:userId/:hotelId
+    -body {
+        roomno : Number,
+        startdate : String,
+        enddate : String
+    }
