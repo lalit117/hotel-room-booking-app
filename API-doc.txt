@@ -38,3 +38,6 @@ POST /user/bookroom/:userId/:hotelId
         startdate : String,
         enddate : String
     }
+
+for geting rooms for availble dates : 
+GET /hotel/getavailrooms/:hotelId?startdate=<date-String>?enddate=<date-string>

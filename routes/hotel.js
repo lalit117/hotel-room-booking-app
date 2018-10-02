@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 var {Hotel} = require('../models/hotel');
+var ObjectId = require('mongodb').ObjectID;
 
 router.get('/', (req, res) => {
     Hotel.find({})
@@ -98,5 +99,27 @@ router.post('/:hotelId/createroom', (req, res) => {
         res.status(400).send();
     });
 });
+
+router.get('/getavailrooms/:hotelId', (req, res) => {
+    var id = req.params.hotelId;
+    var startdate = req.query.start_date;
+    var enddate = req.query.end_date;
+    console.log(id)
+    Hotel.aggregate([
+        {$match: {_id:ObjectId(id)}},
+        {$unwind: {path: "$rooms"}},
+        {$match :
+            { $or: [{"rooms.start_date" :{$lt : new Date(startdate)},"rooms.end_date":{$lt: new Date(startdate)}}, 
+            {"rooms.start_date" :{$gt : new Date(enddate)},"rooms.end_date":{$gt: new Date(enddate)}},
+            {"rooms.start_date" : null , "rooms.end_date" : null}]}},
+        { $group : {_id: { HotelName: "$name", Room_No : "$rooms.roomno"}}}
+    ]).then((result)=>{
+        res.send(result);
+    }).catch((err)=> {
+        console.log(err);
+        res.status(404).send();
+    });
+});
+
 
 module.exports = router;
